@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fba4000ac35e41b7aa6c6666b2c734b1" Name="Diagram1">
+        <EntityTypeShape EntityType="apd64_62011212131Model.boxsetItems" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="apd64_62011212131Model.boxsets" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="apd64_62011212131Model.customers" Width="1.5" PointX="1.5" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="apd64_62011212131Model.employee" Width="1.5" PointX="5.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="apd64_62011212131Model.orderItems" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="apd64_62011212131Model.orders" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="apd64_62011212131Model.products" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="apd64_62011212131Model.FK_boxsetItems_boxsets" ManuallyRouted="false" />
+        <AssociationConnector Association="apd64_62011212131Model.FK_boxsetItems_products" ManuallyRouted="false" />
+        <AssociationConnector Association="apd64_62011212131Model.FK_orders_customers" ManuallyRouted="false" />
+        <AssociationConnector Association="apd64_62011212131Model.FK_orderItems_orders" ManuallyRouted="false" />
+        <AssociationConnector Association="apd64_62011212131Model.FK_orderItems_products" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

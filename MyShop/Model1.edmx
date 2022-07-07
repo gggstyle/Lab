@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="apd64_62011212131Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MyMenu">
+          <Key>
+            <PropertyRef Name="mid" />
+          </Key>
+          <Property Name="mid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menu_name" Type="varchar" MaxLength="100" />
+          <Property Name="unit_price" Type="int" />
+          <Property Name="image" Type="image" />
+          <Property Name="type" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MyOrder">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="totalAmount" Type="int" />
+          <Property Name="amount" Type="int" />
+        </EntityType>
+        <EntityType Name="MyOrderItem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oid" Type="int" />
+          <Property Name="mid" Type="int" />
+          <Property Name="count" Type="int" />
+          <Property Name="sum" Type="int" />
+        </EntityType>
+        <Association Name="FK_MyOrderItem_MyMenu">
+          <End Role="MyMenu" Type="Self.MyMenu" Multiplicity="0..1" />
+          <End Role="MyOrderItem" Type="Self.MyOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MyMenu">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="MyOrderItem">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MyOrderItem_MyOrder">
+          <End Role="MyOrder" Type="Self.MyOrder" Multiplicity="0..1" />
+          <End Role="MyOrderItem" Type="Self.MyOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MyOrder">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="MyOrderItem">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="apd64_62011212131ModelStoreContainer">
+          <EntitySet Name="MyMenu" EntityType="Self.MyMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MyOrder" EntityType="Self.MyOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MyOrderItem" EntityType="Self.MyOrderItem" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MyOrderItem_MyMenu" Association="Self.FK_MyOrderItem_MyMenu">
+            <End Role="MyMenu" EntitySet="MyMenu" />
+            <End Role="MyOrderItem" EntitySet="MyOrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MyOrderItem_MyOrder" Association="Self.FK_MyOrderItem_MyOrder">
+            <End Role="MyOrder" EntitySet="MyOrder" />
+            <End Role="MyOrderItem" EntitySet="MyOrderItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="apd64_62011212131Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MyMenu">
+          <Key>
+            <PropertyRef Name="mid" />
+          </Key>
+          <Property Name="mid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menu_name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="unit_price" Type="Int32" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MyOrderItem" Relationship="Self.FK_MyOrderItem_MyMenu" FromRole="MyMenu" ToRole="MyOrderItem" />
+        </EntityType>
+        <EntityType Name="MyOrder">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="totalAmount" Type="Int32" />
+          <Property Name="amount" Type="Int32" />
+          <NavigationProperty Name="MyOrderItem" Relationship="Self.FK_MyOrderItem_MyOrder" FromRole="MyOrder" ToRole="MyOrderItem" />
+        </EntityType>
+        <EntityType Name="MyOrderItem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oid" Type="Int32" />
+          <Property Name="mid" Type="Int32" />
+          <Property Name="count" Type="Int32" />
+          <Property Name="sum" Type="Int32" />
+          <NavigationProperty Name="MyMenu" Relationship="Self.FK_MyOrderItem_MyMenu" FromRole="MyOrderItem" ToRole="MyMenu" />
+          <NavigationProperty Name="MyOrder" Relationship="Self.FK_MyOrderItem_MyOrder" FromRole="MyOrderItem" ToRole="MyOrder" />
+        </EntityType>
+        <Association Name="FK_MyOrderItem_MyMenu">
+          <End Role="MyMenu" Type="Self.MyMenu" Multiplicity="0..1" />
+          <End Role="MyOrderItem" Type="Self.MyOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MyMenu">
+              <PropertyRef Name="mid" />
+            </Principal>
+            <Dependent Role="MyOrderItem">
+              <PropertyRef Name="mid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MyOrderItem_MyOrder">
+          <End Role="MyOrder" Type="Self.MyOrder" Multiplicity="0..1" />
+          <End Role="MyOrderItem" Type="Self.MyOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MyOrder">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="MyOrderItem">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="apd64_62011212131Entities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MyMenu" EntityType="Self.MyMenu" />
+          <EntitySet Name="MyOrder" EntityType="Self.MyOrder" />
+          <EntitySet Name="MyOrderItem" EntityType="Self.MyOrderItem" />
+          <AssociationSet Name="FK_MyOrderItem_MyMenu" Association="Self.FK_MyOrderItem_MyMenu">
+            <End Role="MyMenu" EntitySet="MyMenu" />
+            <End Role="MyOrderItem" EntitySet="MyOrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MyOrderItem_MyOrder" Association="Self.FK_MyOrderItem_MyOrder">
+            <End Role="MyOrder" EntitySet="MyOrder" />
+            <End Role="MyOrderItem" EntitySet="MyOrderItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="apd64_62011212131ModelStoreContainer" CdmEntityContainer="apd64_62011212131Entities3">
+          <EntitySetMapping Name="MyMenu">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.MyMenu">
+              <MappingFragment StoreEntitySet="MyMenu">
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="menu_name" ColumnName="menu_name" />
+                <ScalarProperty Name="unit_price" ColumnName="unit_price" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MyOrder">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.MyOrder">
+              <MappingFragment StoreEntitySet="MyOrder">
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MyOrderItem">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.MyOrderItem">
+              <MappingFragment StoreEntitySet="MyOrderItem">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="mid" ColumnName="mid" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="sum" ColumnName="sum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="apd64_62011212131Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="boxsetItems">
+          <Key>
+            <PropertyRef Name="biid" />
+          </Key>
+          <Property Name="biid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bid" Type="int" Nullable="false" />
+          <Property Name="pid" Type="int" />
+        </EntityType>
+        <EntityType Name="boxsets">
+          <Key>
+            <PropertyRef Name="bid" />
+          </Key>
+          <Property Name="bid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="price" Type="int" />
+          <Property Name="detail" Type="varchar" MaxLength="255" />
+          <Property Name="status" Type="int" />
+        </EntityType>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+          <Property Name="status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="eid" />
+          </Key>
+          <Property Name="eid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="username" Type="varchar" MaxLength="255" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+          <Property Name="type" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="orderItems">
+          <Key>
+            <PropertyRef Name="oiid" />
+          </Key>
+          <Property Name="oiid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oid" Type="int" />
+          <Property Name="pid" Type="int" />
+          <Property Name="amount" Type="int" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cid" Type="int" />
+          <Property Name="total" Type="int" />
+          <Property Name="datetime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="500" />
+          <Property Name="detail" Type="varchar" MaxLength="2000" />
+          <Property Name="price" Type="int" />
+          <Property Name="amount" Type="int" />
+          <Property Name="image" Type="varchar(max)" />
+          <Property Name="type" Type="varchar" MaxLength="255" />
+          <Property Name="product_id" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_boxsetItems_boxsets">
+          <End Role="boxsets" Type="Self.boxsets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="boxsetItems" Type="Self.boxsetItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boxsets">
+              <PropertyRef Name="bid" />
+            </Principal>
+            <Dependent Role="boxsetItems">
+              <PropertyRef Name="bid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_boxsetItems_products">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="boxsetItems" Type="Self.boxsetItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="boxsetItems">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderItems_orders">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="orderItems" Type="Self.orderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="orderItems">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderItems_products">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="orderItems" Type="Self.orderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="orderItems">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_customers">
+          <End Role="customers" Type="Self.customers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="apd64_62011212131ModelStoreContainer">
+          <EntitySet Name="boxsetItems" EntityType="Self.boxsetItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="boxsets" EntityType="Self.boxsets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orderItems" EntityType="Self.orderItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_boxsetItems_boxsets" Association="Self.FK_boxsetItems_boxsets">
+            <End Role="boxsets" EntitySet="boxsets" />
+            <End Role="boxsetItems" EntitySet="boxsetItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_boxsetItems_products" Association="Self.FK_boxsetItems_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="boxsetItems" EntitySet="boxsetItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderItems_orders" Association="Self.FK_orderItems_orders">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="orderItems" EntitySet="orderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderItems_products" Association="Self.FK_orderItems_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="orderItems" EntitySet="orderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_customers" Association="Self.FK_orders_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="apd64_62011212131Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="boxsetItems">
+          <Key>
+            <PropertyRef Name="biid" />
+          </Key>
+          <Property Name="biid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bid" Type="Int32" Nullable="false" />
+          <Property Name="pid" Type="Int32" />
+          <NavigationProperty Name="boxsets" Relationship="Self.FK_boxsetItems_boxsets" FromRole="boxsetItems" ToRole="boxsets" />
+          <NavigationProperty Name="products" Relationship="Self.FK_boxsetItems_products" FromRole="boxsetItems" ToRole="products" />
+        </EntityType>
+        <EntityType Name="boxsets">
+          <Key>
+            <PropertyRef Name="bid" />
+          </Key>
+          <Property Name="bid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="detail" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <NavigationProperty Name="boxsetItems" Relationship="Self.FK_boxsetItems_boxsets" FromRole="boxsets" ToRole="boxsetItems" />
+        </EntityType>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orders_customers" FromRole="customers" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="eid" />
+          </Key>
+          <Property Name="eid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="username" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="orderItems">
+          <Key>
+            <PropertyRef Name="oiid" />
+          </Key>
+          <Property Name="oiid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oid" Type="Int32" />
+          <Property Name="pid" Type="Int32" />
+          <Property Name="amount" Type="Int32" />
+          <NavigationProperty Name="orders" Relationship="Self.FK_orderItems_orders" FromRole="orderItems" ToRole="orders" />
+          <NavigationProperty Name="products" Relationship="Self.FK_orderItems_products" FromRole="orderItems" ToRole="products" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="oid" />
+          </Key>
+          <Property Name="oid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cid" Type="Int32" />
+          <Property Name="total" Type="Int32" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="customers" Relationship="Self.FK_orders_customers" FromRole="orders" ToRole="customers" />
+          <NavigationProperty Name="orderItems" Relationship="Self.FK_orderItems_orders" FromRole="orders" ToRole="orderItems" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="pid" />
+          </Key>
+          <Property Name="pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="detail" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="amount" Type="Int32" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="product_id" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="boxsetItems" Relationship="Self.FK_boxsetItems_products" FromRole="products" ToRole="boxsetItems" />
+          <NavigationProperty Name="orderItems" Relationship="Self.FK_orderItems_products" FromRole="products" ToRole="orderItems" />
+        </EntityType>
+        <Association Name="FK_boxsetItems_boxsets">
+          <End Role="boxsets" Type="Self.boxsets" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="boxsetItems" Type="Self.boxsetItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="boxsets">
+              <PropertyRef Name="bid" />
+            </Principal>
+            <Dependent Role="boxsetItems">
+              <PropertyRef Name="bid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_boxsetItems_products">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="boxsetItems" Type="Self.boxsetItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="boxsetItems">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orders_customers">
+          <End Role="customers" Type="Self.customers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderItems_orders">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="orderItems" Type="Self.orderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="oid" />
+            </Principal>
+            <Dependent Role="orderItems">
+              <PropertyRef Name="oid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderItems_products">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="orderItems" Type="Self.orderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="pid" />
+            </Principal>
+            <Dependent Role="orderItems">
+              <PropertyRef Name="pid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="apd64_62011212131Entities8" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="boxsetItems" EntityType="Self.boxsetItems" />
+          <EntitySet Name="boxsets" EntityType="Self.boxsets" />
+          <EntitySet Name="customers" EntityType="Self.customers" />
+          <EntitySet Name="employee" EntityType="Self.employee" />
+          <EntitySet Name="orderItems" EntityType="Self.orderItems" />
+          <EntitySet Name="orders" EntityType="Self.orders" />
+          <EntitySet Name="products" EntityType="Self.products" />
+          <AssociationSet Name="FK_boxsetItems_boxsets" Association="Self.FK_boxsetItems_boxsets">
+            <End Role="boxsets" EntitySet="boxsets" />
+            <End Role="boxsetItems" EntitySet="boxsetItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_boxsetItems_products" Association="Self.FK_boxsetItems_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="boxsetItems" EntitySet="boxsetItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orders_customers" Association="Self.FK_orders_customers">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderItems_orders" Association="Self.FK_orderItems_orders">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="orderItems" EntitySet="orderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderItems_products" Association="Self.FK_orderItems_products">
+            <End Role="products" EntitySet="products" />
+            <End Role="orderItems" EntitySet="orderItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="apd64_62011212131ModelStoreContainer" CdmEntityContainer="apd64_62011212131Entities8">
+          <EntitySetMapping Name="boxsetItems">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.boxsetItems">
+              <MappingFragment StoreEntitySet="boxsetItems">
+                <ScalarProperty Name="biid" ColumnName="biid" />
+                <ScalarProperty Name="bid" ColumnName="bid" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="boxsets">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.boxsets">
+              <MappingFragment StoreEntitySet="boxsets">
+                <ScalarProperty Name="bid" ColumnName="bid" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="detail" ColumnName="detail" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.customers">
+              <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="eid" ColumnName="eid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orderItems">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.orderItems">
+              <MappingFragment StoreEntitySet="orderItems">
+                <ScalarProperty Name="oiid" ColumnName="oiid" />
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="oid" ColumnName="oid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="apd64_62011212131Model.products">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="detail" ColumnName="detail" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
